@@ -1,8 +1,8 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Collider))]
 public class HitBox : MonoBehaviour {
 
     public DamageType damageType;
+    public bool canBeBlocked = true;
     public int attack;
 }
