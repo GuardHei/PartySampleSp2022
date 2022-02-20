@@ -56,7 +56,7 @@ public class Shield : MonoBehaviour {
         }
     }
 
-    public bool CheckBlocked(HitBox attacker) => _blocked.Contains(attacker);
+    public bool CheckBlocked(HitBox attacker) => attacker.canBeBlocked && _blocked.Contains(attacker);
 
     private void OnTriggerEnter(Collider other) {
         bool flag = false;
