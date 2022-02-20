@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
@@ -50,6 +51,7 @@ public class PlayerMovementController : MonoBehaviour {
 	[SerializeField]
 	private Rigidbody _rigidbody;
 
+	[Conditional("UNITY_EDITOR")]
 	private void OnDrawGizmos() {
 		Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, transform.lossyScale);
 		Gizmos.color = Color.green;
@@ -72,6 +74,7 @@ public class PlayerMovementController : MonoBehaviour {
 		Gizmos.DrawLine(Vector3.zero, forward);
 	}
 	
+	[Conditional("UNITY_EDITOR")]
 	private void OnDrawGizmosSelected() {
 		Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, transform.lossyScale);
 		Gizmos.color = Color.green;
