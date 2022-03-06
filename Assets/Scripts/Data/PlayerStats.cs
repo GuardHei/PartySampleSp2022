@@ -8,8 +8,13 @@ public static class PlayerStats {
     public static readonly Dictionary<string, float> FloatAttributes = new Dictionary<string, float>(10);
     public static readonly Dictionary<string, string> StringAttributes = new Dictionary<string, string>(10);
 
+    public static readonly string[] WeaponsOnHold = { "", "", "" };
+    public static string ArmorOnHold = "";
+
     public static readonly Dictionary<string, int> Items = new Dictionary<string, int>(10);
     public static readonly Dictionary<string, int> ItemsMax = new Dictionary<string, int>(10);
+    public static readonly List<string> weapons = new List<string>(10);
+    public static readonly List<string> armors = new List<string>(10);
 
     static PlayerStats() {
         IntAttributes["max health"] = 100;
@@ -51,5 +56,15 @@ public static class PlayerStats {
         curr += amount;
         if (ItemsMax.ContainsKey(itemName)) curr = Mathf.Min(curr, ItemsMax[itemName]);
         Items[itemName] = curr;
+    }
+
+    public static void AddWeapon(string itemName) {
+        if (weapons.Contains(itemName)) return;
+        weapons.Add(itemName);
+    }
+    
+    public static void AddArmor(string itemName) {
+        if (armors.Contains(itemName)) return;
+        armors.Add(itemName);
     }
 }

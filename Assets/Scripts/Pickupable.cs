@@ -4,6 +4,7 @@ using UnityEngine;
 public class Pickupable : MonoBehaviour {
 
     public string itemName;
+    public PickupType pickupType;
     public string pickupText;
     public int amount = 1;
     public float pickupDistance = 10.0f;
@@ -21,6 +22,23 @@ public class Pickupable : MonoBehaviour {
     }
 
     public void Pickup(Interactable interactable) {
-        if (!string.IsNullOrEmpty(itemName)) PlayerStats.AddItem(itemName, amount);
+        if (string.IsNullOrEmpty(itemName)) return;
+        switch (pickupType) {
+            case PickupType.Item: PlayerStats.AddItem(itemName, amount);
+                break;
+            case PickupType.Weapon: PlayerStats.AddWeapon(itemName);
+                break;
+            case PickupType.Armor: PlayerStats.AddArmor(itemName);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
     }
+}
+
+[Serializable]
+public enum PickupType {
+    Item,
+    Weapon,
+    Armor
 }
