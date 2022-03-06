@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[ExecuteInEditMode]
+// [ExecuteInEditMode]
 public class VerticalBillboardController : MonoBehaviour {
 
     private int _scaleID;
@@ -10,11 +10,7 @@ public class VerticalBillboardController : MonoBehaviour {
     private Renderer _renderer;
 
     private void Awake() {
-        #if UNITY_EDITOR
-        _material = GetComponent<Renderer>().sharedMaterial;
-        #else
         _material = GetComponent<Renderer>().material;
-        #endif
         _scaleID = Shader.PropertyToID("_ScaleXY");
         _meshFilter = GetComponent<MeshFilter>();
         _renderer = GetComponent<Renderer>();
@@ -36,12 +32,5 @@ public class VerticalBillboardController : MonoBehaviour {
     private void Update() {
         var scale = transform.lossyScale;
         _material.SetVector(_scaleID, scale);
-    }
-
-    private void OnValidate() {
-        _material = GetComponent<Renderer>().sharedMaterial;
-        _meshFilter = GetComponent<MeshFilter>();
-        _renderer = GetComponent<Renderer>();
-        InitBoundingBox();
     }
 }
