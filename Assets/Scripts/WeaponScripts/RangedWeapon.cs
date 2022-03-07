@@ -4,22 +4,29 @@ using UnityEngine;
 
 public class RangedWeapon : Weapon
 {
-    public int ammo;
-    public int reloadSpeed;
+    private int currAmmo;
 
-    public void Attack(int type)
+    public int maxAmmo;
+    public float reloadSpeed;
+    private double reloadTimer = 0.0f;
+
+    private void Start()
     {
-
+        currAmmo = maxAmmo;
     }
 
-    public static void Rapid() //LMB
+    public void Attack(string type)
     {
-
+        if (currAmmo > 0 && Time.timeAsDouble > reloadTimer) {
+            base.Attack(type);
+            currAmmo -= 1;
+        }
     }
 
-    public static void Charged() //RMB
+    public void Reload() 
     {
-
+        currAmmo = maxAmmo;
+        reloadTimer = Time.timeAsDouble + reloadSpeed;
     }
 
 }
