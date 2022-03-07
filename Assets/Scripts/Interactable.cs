@@ -7,6 +7,11 @@ public class Interactable : MonoBehaviour {
     public bool oneTime;
     public bool isInteractable;
     public bool hasReverseInteraction;
+    public float maxInteractionDistance = 10.0f;
+    [Multiline]
+    public string interactionText;
+    [Multiline]
+    public string reverseInteractionText;
     public UnityEvent<Interactable> onInteraction;
     public UnityEvent<Interactable> onReverseInteraction;
 
@@ -18,6 +23,7 @@ public class Interactable : MonoBehaviour {
 
     public void Interact() {
         if (!IsInteractable) return;
+        if (oneTime && _interactionCount > 0) return;
         _interactionCount++;
         if (!hasReverseInteraction) onInteraction?.Invoke(this);
         else {
