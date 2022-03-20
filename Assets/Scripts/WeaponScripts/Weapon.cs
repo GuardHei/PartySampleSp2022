@@ -8,6 +8,7 @@ public class Weapon : MonoBehaviour
     [Header("MetaData")]
     public float attack;
     public float fireRate;
+    public int crazyThreshold;
     public float pierce; //possible idea, reduction to armor
     public string weaponName;
     private double nextFire = 0.0f;
@@ -27,18 +28,27 @@ public class Weapon : MonoBehaviour
                     LMBAttack();
                     break;
                 case "Fire2":
-                    LMBChargedAttack();
+                    if (CheckCrazy()) {
+                        LMBChargedAttack();
+                    }
                     break;
                 case "Fire3":
                     RMBAttack();
                     break;
                 case "Fire4":
-                    RMBChargedAttack();
+                    if (CheckCrazy())
+                    {
+                        RMBChargedAttack();
+                    }
                     break;
             }
         }
     }
-    
+    private bool CheckCrazy()
+    {
+        return PlayerStats.GetIntAttribute("curr craziness") > crazyThreshold;
+    }
+        
     private bool CheckConstraints()
     {
         if (Time.timeAsDouble > nextFire) //Add Crazy Constraint
