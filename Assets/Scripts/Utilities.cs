@@ -23,9 +23,9 @@ public static class Utilities {
 
 		maxDistance += radius;
 		
-		var potentialHits = Physics.SphereCastAll(origin, radius, direction, maxDistance, layerMask);
+		var potentialHits = Physics.SphereCastAll(origin, radius, direction, maxDistance, layerMask, QueryTriggerInteraction.Collide);
 		var actualHits = new List<RaycastHit>(potentialHits.Length);
-		
+
 		actualHits.AddRange(
 			from hit in potentialHits 
 			let hitDir = hit.point - origin 
@@ -39,6 +39,7 @@ public static class Utilities {
 	public static bool ConeCast(Vector3 origin, Vector3 direction, float coneAngle, out RaycastHit hit, float maxDistance, int layerMask = int.MaxValue) {
 		var hits = ConeCastAll(origin, direction, coneAngle, maxDistance, layerMask);
 		hit = new RaycastHit();
+		// Debug.Log(hits.Length);
 		if (hits.Length == 0) return false;
 		
 		var radius = Mathf.Tan(coneAngle * Mathf.Deg2Rad) * maxDistance;
@@ -47,8 +48,11 @@ public static class Utilities {
 		hit.distance = maxDistance + 1.0f;
 
 		foreach (var potential in hits) {
+			// Debug.Log(potential.transform.name);
 			if (potential.distance < hit.distance) hit = potential;
 		}
+		
+		// Debug.Log("Hit " + hit.transform.name);
 
 		return true;
 	}
