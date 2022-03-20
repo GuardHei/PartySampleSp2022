@@ -41,6 +41,7 @@ public class InGameStats : MonoBehaviour {
     }
 
     private void Update() {
+        // print(PlayerStats.player.name);
         armorOnHold = PlayerStats.ArmorOnHold;
     }
 }
