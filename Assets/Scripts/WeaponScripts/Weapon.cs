@@ -13,10 +13,10 @@ public class Weapon : MonoBehaviour
     public string weaponName;
     private double nextFire = 0.0f;
     [Header("HitBoxes")]
-    public HitBox LMBBox;
-    public HitBox LMBChargeBox;
-    public HitBox RMBBox;
-    public HitBox RMBChargeBox;
+    public GameObject LMBBox; //Make sure to attach hitbox script
+    public GameObject LMBChargeBox;
+    public GameObject RMBBox;
+    public GameObject RMBChargeBox;
 
     public void Attack(string fireType)
     {
@@ -25,21 +25,21 @@ public class Weapon : MonoBehaviour
             switch (fireType)
             {
                 case "Fire1":
-                    LMBAttack();
+                    CreateHitbox(LMBBox);
                     break;
                 case "Fire2":
-                    RMBAttack();
+                    CreateHitbox(RMBBox);
                     break;
                 case "Fire3":
                     if (CheckCrazy()) 
                     {
-                        LMBChargedAttack();
+                        CreateHitbox(LMBChargeBox);
                     }
                     break;
                 case "Fire4":
                     if (CheckCrazy())
                     {
-                        RMBChargedAttack();
+                        CreateHitbox(RMBChargeBox);
                     }
                     break;
             }
@@ -60,23 +60,8 @@ public class Weapon : MonoBehaviour
         return false;
     }
 
-    public void LMBAttack()
+    private void CreateHitbox(GameObject hitbox) //Finish location to get curr position of player/ camera.
     {
-        //use LMBBox
-    }
-
-    public void LMBChargedAttack()
-    {
-        //use LMBChargeBox
-    }
-
-    public void RMBAttack()
-    {
-        //use RMBBox
-    }
-
-    public void RMBChargedAttack()
-    {
-        //use RMBChargeBox
+        GameObject obj = Instantiate(hitbox, GetRelativePoint(new Vector3(0, 0, 5)), Quaternion.identity); //arbitrary amount in front of player
     }
 }
