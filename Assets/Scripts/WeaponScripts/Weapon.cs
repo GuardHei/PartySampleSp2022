@@ -28,12 +28,13 @@ public class Weapon : MonoBehaviour
                     LMBAttack();
                     break;
                 case "Fire2":
-                    if (CheckCrazy()) {
-                        LMBChargedAttack();
-                    }
+                    RMBAttack();
                     break;
                 case "Fire3":
-                    RMBAttack();
+                    if (CheckCrazy()) 
+                    {
+                        LMBChargedAttack();
+                    }
                     break;
                 case "Fire4":
                     if (CheckCrazy())
