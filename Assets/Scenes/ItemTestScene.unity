@@ -9312,7 +9312,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0fe8f3fd886454282f4f455eb54bfe0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Test Item
+  itemName: hand_sanitizer
   pickupType: 0
   pickupText: Picked up Test Item
   amount: 1
@@ -9348,6 +9348,7 @@ MonoBehaviour:
   isInteractable: 1
   hasReverseInteraction: 0
   maxInteractionDistance: 5
+  autoDisable: 1
   interactionText: 'Pick up '
   reverseInteractionText: 
   onInteraction:
@@ -9542,6 +9543,7 @@ GameObject:
   - component: {fileID: 1922191956}
   - component: {fileID: 1922191960}
   - component: {fileID: 1922191961}
+  - component: {fileID: 1922191962}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -9668,6 +9670,48 @@ MonoBehaviour:
   coneDistance: 2
   coneAngle: 15
   _bestPick: {fileID: 0}
+--- !u!114 &1922191962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1922191955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c75e6f5c597743f4bd95b139c47fbf65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  intAttributes:
+    m_Keys:
+    - max health
+    - curr health
+    - max craziness
+    - curr craziness
+    m_Values: 64000000640000006400000064000000
+  floatAttributes:
+    m_Keys:
+    - speed
+    m_Values:
+    - 5
+  stringAttributes:
+    m_Keys:
+    - name
+    m_Values:
+    - Why don't you name your character?
+  weaponsOnHold: []
+  armorOnHold: 
+  weapons: []
+  armors: []
+  items:
+    m_Keys: []
+    m_Values: 
+  ItemsMax:
+    m_Keys:
+    - hand sanitizer
+    - boba
+    - weed
+    m_Values: 630000006300000063000000
 --- !u!21 &2017099613
 Material:
   serializedVersion: 6
