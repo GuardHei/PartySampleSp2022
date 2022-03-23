@@ -14,10 +14,6 @@ public class InteractionCheck : MonoBehaviour {
     [Header("Runtime Debug (Do not change)")]
     [SerializeField]
     private Interactable _bestPick;
-    [SerializeField]
-    private List<Interactable> _potentials = new List<Interactable>();
-    [SerializeField]
-    private List<Collider> _colliders = new List<Collider>();
 
     public bool HasInteractable => _bestPick;
 
@@ -28,10 +24,10 @@ public class InteractionCheck : MonoBehaviour {
 
         if (!Utilities.ConeCast(origin.position, origin.forward, coneAngle, out var hit, coneDistance)) return;
         int layer = 1 << hit.transform.gameObject.layer;
-        if ((mask.value & layer) != 0) return;
+        if ((mask.value & layer) == 0) return;
         if (!hit.transform.TryGetComponent<Interactable>(out var interactable)) return;
-        if (interactable.maxInteractionDistance <= hit.distance) _bestPick = interactable;
-        
+        if (interactable.maxInteractionDistance >= hit.distance) _bestPick = interactable;
+
         if (Input.GetKeyUp(key)) Interact();
     }
 

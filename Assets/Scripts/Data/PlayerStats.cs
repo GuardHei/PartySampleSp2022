@@ -1,26 +1,30 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public static class PlayerStats {
 
-    public static readonly Dictionary<string, int> IntAttributes = new Dictionary<string, int>(10);
-    public static readonly Dictionary<string, float> FloatAttributes = new Dictionary<string, float>(10);
-    public static readonly Dictionary<string, string> StringAttributes = new Dictionary<string, string>(10);
+    public static GameObject player;
+
+    public static readonly SerializedDictionary<string, int> IntAttributes = new SerializedDictionary<string, int>();
+    public static readonly SerializedDictionary<string, float> FloatAttributes = new SerializedDictionary<string, float>();
+    public static readonly SerializedDictionary<string, string> StringAttributes = new SerializedDictionary<string, string>();
 
     public static readonly string[] WeaponsOnHold = { "", "", "" };
     public static string ArmorOnHold = "";
 
-    public static readonly Dictionary<string, int> Items = new Dictionary<string, int>(10);
-    public static readonly Dictionary<string, int> ItemsMax = new Dictionary<string, int>(10);
+    public static readonly SerializedDictionary<string, int> Items = new SerializedDictionary<string, int>();
+    public static readonly SerializedDictionary<string, int> ItemsMax = new SerializedDictionary<string, int>();
     public static readonly List<string> weapons = new List<string>(10);
     public static readonly List<string> armors = new List<string>(10);
 
     static PlayerStats() {
         IntAttributes["max health"] = 100;
         IntAttributes["curr health"] = 100;
-        IntAttributes["max craziness"] = 100;
-        IntAttributes["curr craziness"] = 100;
+        IntAttributes["max madness"] = 100;
+        IntAttributes["curr madness"] = 100;
 
         FloatAttributes["speed"] = 5.0f;
 
@@ -29,6 +33,8 @@ public static class PlayerStats {
         ItemsMax["hand sanitizer"] = 99;
         ItemsMax["boba"] = 99;
         ItemsMax["weed"] = 99;
+
+        SceneManager.activeSceneChanged += (s0, s1) => UpdatePlayerObject();
     }
 
     public static int GetIntAttribute(string attr, int defaultValue = 0) => !IntAttributes.ContainsKey(attr) ? defaultValue : IntAttributes[attr];
@@ -66,5 +72,9 @@ public static class PlayerStats {
     public static void AddArmor(string itemName) {
         if (armors.Contains(itemName)) return;
         armors.Add(itemName);
+    }
+
+    public static void UpdatePlayerObject() {
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 }
