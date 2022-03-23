@@ -8,14 +8,17 @@ public class Weapon : MonoBehaviour
     [Header("MetaData")]
     public float attack;
     public float fireRate;
+    public int crazyThreshold;
     public float pierce; //possible idea, reduction to armor
     public string weaponName;
     private double nextFire = 0.0f;
     [Header("HitBoxes")]
-    public HitBox LMBBox;
-    public HitBox LMBChargeBox;
-    public HitBox RMBBox;
-    public HitBox RMBChargeBox;
+    public GameObject LMBBox; //Make sure to attach hitbox script
+    public GameObject LMBChargeBox;
+    public GameObject RMBBox;
+    public GameObject RMBChargeBox;
+    [Header("ParentRigidbody")]
+    public Rigidbody parentRB;
 
     public void Attack(string fireType)
     {
@@ -24,24 +27,34 @@ public class Weapon : MonoBehaviour
             switch (fireType)
             {
                 case "Fire1":
-                    LMBAttack();
+                    CreateHitbox(LMBBox);
                     break;
                 case "Fire2":
-                    LMBChargedAttack();
+                    CreateHitbox(RMBBox);
                     break;
                 case "Fire3":
-                    RMBAttack();
+                    if (CheckCrazy()) 
+                    {
+                        CreateHitbox(LMBChargeBox);
+                    }
                     break;
                 case "Fire4":
-                    RMBChargedAttack();
+                    if (CheckCrazy())
+                    {
+                        CreateHitbox(RMBChargeBox);
+                    }
                     break;
             }
         }
     }
-    
+    private bool CheckCrazy()
+    {
+        return PlayerStats.GetIntAttribute("curr craziness") > crazyThreshold;
+    }
+        
     private bool CheckConstraints()
     {
-        if (Time.timeAsDouble > nextFire) //Add Crazy Constraint
+        if (Time.timeAsDouble > nextFire) 
         {
             nextFire = Time.timeAsDouble + fireRate;
             return true;
@@ -49,23 +62,8 @@ public class Weapon : MonoBehaviour
         return false;
     }
 
-    public void LMBAttack()
+    private void CreateHitbox(GameObject hitbox) 
     {
-        //use LMBBox
-    }
-
-    public void LMBChargedAttack()
-    {
-        //use LMBChargeBox
-    }
-
-    public void RMBAttack()
-    {
-        //use RMBBox
-    }
-
-    public void RMBChargedAttack()
-    {
-        //use RMBChargeBox
+        GameObject obj = Instantiate(hitbox, parentRB.GetRelativePointVelocity(new Vector3(0, 0, 5)), Quaternion.identity); //arbitrary amount in front of player
     }
 }
