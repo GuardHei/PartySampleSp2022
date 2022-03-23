@@ -6,8 +6,7 @@ public class WeaponHitBox : MonoBehaviour
 {
     private void Start()
     {
-        WeaponRB = GetComponent<Rigidbody>() as Rigidbody; 
-        WeaponHB = GetComponent<HitBox>() as HitBox;
+       // WeaponRB = GetComponent<Rigidbody>(); //Getting a weird compile error here
     }
 
     private void Update()

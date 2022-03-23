@@ -17,6 +17,8 @@ public class Weapon : MonoBehaviour
     public GameObject LMBChargeBox;
     public GameObject RMBBox;
     public GameObject RMBChargeBox;
+    [Header("ParentRigidbody")]
+    public Rigidbody parentRB;
 
     public void Attack(string fireType)
     {
@@ -52,7 +54,7 @@ public class Weapon : MonoBehaviour
         
     private bool CheckConstraints()
     {
-        if (Time.timeAsDouble > nextFire) //Add Crazy Constraint
+        if (Time.timeAsDouble > nextFire) 
         {
             nextFire = Time.timeAsDouble + fireRate;
             return true;
@@ -60,8 +62,8 @@ public class Weapon : MonoBehaviour
         return false;
     }
 
-    private void CreateHitbox(GameObject hitbox) //Finish location to get curr position of player/ camera.
+    private void CreateHitbox(GameObject hitbox) 
     {
-        GameObject obj = Instantiate(hitbox, GetRelativePoint(new Vector3(0, 0, 5)), Quaternion.identity); //arbitrary amount in front of player
+        GameObject obj = Instantiate(hitbox, parentRB.GetRelativePointVelocity(new Vector3(0, 0, 5)), Quaternion.identity); //arbitrary amount in front of player
     }
 }
