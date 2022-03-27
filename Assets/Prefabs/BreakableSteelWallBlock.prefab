@@ -14,8 +14,9 @@ GameObject:
   - component: {fileID: 8543353685366511809}
   - component: {fileID: 4113480627519928816}
   - component: {fileID: 4945943802077837275}
+  - component: {fileID: 732781540024988948}
   m_Layer: 0
-  m_Name: Breakable
+  m_Name: BreakableSteelWallBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,7 +52,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   door: {fileID: 6730281007427596301}
   initialState: 0
-  oneTime: 0
+  oneTime: 1
   transitionTime: 1
   openShift: {x: 0, y: -1.1, z: 0}
   _openedTimes: 0
@@ -82,7 +83,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5357272407992883112}
         m_TargetAssemblyTypeName: DoorController, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: Open
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -98,7 +99,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5357272407992883112}
         m_TargetAssemblyTypeName: DoorController, Assembly-CSharp
-        m_MethodName: Close
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -119,7 +120,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 3, z: 1.5}
+  m_Size: {x: 1.1, y: 3, z: 1.1}
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &4113480627519928816
 MonoBehaviour:
@@ -174,6 +175,27 @@ MonoBehaviour:
         m_CallState: 2
   _dead: 0
   _health: 0
+--- !u!114 &732781540024988948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1734686178869409899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5b03fc3473642b9a5830d26d3ad03fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasWeakness: 0
+  weakness: 0
+  damagedByLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  damagedByTag: Player
+  defense: 0
+  health: {fileID: 4945943802077837275}
+  shields: []
 --- !u!1 &6730281007427596300
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,7 +226,7 @@ Transform:
   m_GameObject: {fileID: 6730281007427596300}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1734686178869409892}
@@ -238,7 +260,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c76217c60ee6f462ab3c932e8dc1a52e, type: 2}
+  - {fileID: 2100000, guid: 261d00c20156648e79d92b8893396836, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
