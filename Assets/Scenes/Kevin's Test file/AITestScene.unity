@@ -9175,6 +9175,7 @@ GameObject:
   - component: {fileID: 1003110016}
   - component: {fileID: 1003110017}
   - component: {fileID: 1003110018}
+  - component: {fileID: 1003110019}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -9264,6 +9265,37 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!114 &1003110019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003110014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c75e6f5c597743f4bd95b139c47fbf65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  intAttributes:
+    m_Keys: []
+    m_Values: 
+  floatAttributes:
+    m_Keys: []
+    m_Values: []
+  stringAttributes:
+    m_Keys: []
+    m_Values: []
+  weaponsOnHold: []
+  armorOnHold: 
+  weapons: []
+  armors: []
+  items:
+    m_Keys: []
+    m_Values: 
+  ItemsMax:
+    m_Keys: []
+    m_Values: 
 --- !u!1 &1427642102
 GameObject:
   m_ObjectHideFlags: 0
@@ -9538,6 +9570,9 @@ GameObject:
   - component: {fileID: 1922191957}
   - component: {fileID: 1922191956}
   - component: {fileID: 1922191960}
+  - component: {fileID: 1922191961}
+  - component: {fileID: 1922191963}
+  - component: {fileID: 1922191962}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -9644,6 +9679,54 @@ MonoBehaviour:
   cameraRoot: {fileID: 1687258585}
   mainCamera: {fileID: 0}
   weaponCamera: {fileID: 0}
+--- !u!114 &1922191961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1922191955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4df08eaa250c49da8f5b16cf4f57b53e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 0}
+  id: hand sanitizer
+  key: 55
+  cure: 10
+--- !u!114 &1922191962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1922191955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e4dab01e92c4a178fa6cb7bf76005c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 0}
+  id: weed
+  key: 48
+  recover: 10
+--- !u!114 &1922191963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1922191955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4df08eaa250c49da8f5b16cf4f57b53e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 0}
+  id: boba
+  key: 56
+  cure: 30
 --- !u!21 &2017099613
 Material:
   serializedVersion: 6

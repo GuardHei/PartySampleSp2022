@@ -32,14 +32,14 @@ public class TemplateEnemyAI : MonoBehaviour {
     public CoroutineTask attackCooldown;
 
     // Start is called before the first frame update
-    void Awake()
-    {
-        agent = GetComponent<NavMeshAgent>();
-        rigidbody = GetComponent<Rigidbody>();
+    void Awake() {
+        if (target == null && PlayerStats.player) target = PlayerStats.player.transform;
+        if (agent == null) agent = GetComponent<NavMeshAgent>();
+        if (rigidbody == null) rigidbody = GetComponent<Rigidbody>();
         agent.updatePosition = false;
         agent.updateRotation = false;
         originalPos = transform.position;
-        //Behavior test
+        // Behavior test
         currentState = TemplateEnemyState.Approaching;
         attackCooldown = new CoroutineTask(this);
     }

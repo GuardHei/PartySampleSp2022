@@ -29,6 +29,10 @@ public static class PlayerStats {
         FloatAttributes["speed"] = 5.0f;
 
         StringAttributes["name"] = "Why don't you name your character?";
+
+        Items["hand sanitizer"] = 1;
+        Items["boba"] = 1;
+        Items["weed"] = 1;
         
         ItemsMax["hand sanitizer"] = 99;
         ItemsMax["boba"] = 99;
