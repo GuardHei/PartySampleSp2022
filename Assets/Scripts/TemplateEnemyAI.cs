@@ -11,6 +11,7 @@ using Random = UnityEngine.Random;
 public class TemplateEnemyAI : MonoBehaviour {
     
     public float sight = 5f;
+    public float trackingSight = 20f;
     public LayerMask cannotSeeThrough;
     public float maxLostTime = 5f;
     public float minAttackDistance = 2f;
@@ -86,7 +87,7 @@ public class TemplateEnemyAI : MonoBehaviour {
     {
         MoveTowards(originalPos);
 
-        if (!CanSeePlayer()) return;
+        if (!CanSeePlayer(sight)) return;
         
         currentState = TemplateEnemyState.Approaching;
         return;
@@ -94,7 +95,7 @@ public class TemplateEnemyAI : MonoBehaviour {
 
     void UpdateApproaching() {
         float dist;
-        if (!CanSeePlayer(out dist)) {
+        if (!CanSeePlayer(trackingSight, out dist)) {
             currentState = TemplateEnemyState.Seeking;
             return;
         }
@@ -115,14 +116,14 @@ public class TemplateEnemyAI : MonoBehaviour {
         }
 
         MoveTowards(playerLastSeenPosition);
-        if (CanSeePlayer()) currentState = TemplateEnemyState.Approaching;
+        if (CanSeePlayer(trackingSight)) currentState = TemplateEnemyState.Approaching;
     }
     
     void UpdateAttacking()
     {
         //Add attack behaviors
         float dist;
-        if (!CanSeePlayer(out dist)) {
+        if (!CanSeePlayer(trackingSight, out dist)) {
             currentState = TemplateEnemyState.Seeking;
             return;
         }
@@ -149,14 +150,14 @@ public class TemplateEnemyAI : MonoBehaviour {
         agent.nextPosition = rigidbody.position;
     }
     
-    bool CanSeePlayer(out float dist) {
+    bool CanSeePlayer(float s, out float dist) {
         var currPos = transform.position;
         var tarPos = target.position;
 
         var direction = tarPos - currPos;
         dist = direction.magnitude;
 
-        if (dist > sight) return false;
+        if (dist > s) return false;
 
         var canSee = !Physics.Linecast(currPos, tarPos, cannotSeeThrough.value, QueryTriggerInteraction.Ignore);
         
@@ -170,7 +171,7 @@ public class TemplateEnemyAI : MonoBehaviour {
         return true;
     }
 
-    bool CanSeePlayer() => CanSeePlayer(out var dist);
+    bool CanSeePlayer(float s) => CanSeePlayer(s, out var dist);
 
     void TryAttack() {
         if (!canAttack) return;

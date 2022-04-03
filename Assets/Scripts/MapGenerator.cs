@@ -32,6 +32,8 @@ public class MapGenerator : MonoBehaviour {
 		Vector3 cellOffset = Vector3.Scale(tilemap.cellSize, tilemap.tileAnchor);
 		cellOffset.z = cellOffset.y;
 		cellOffset.y = 0f;
+		cellOffset.x += .5f;
+		cellOffset.z += .5f;
 
 		for (int i = 0; i < _width; i++) {
 			for (int j = 0; j < _length; j++) {
