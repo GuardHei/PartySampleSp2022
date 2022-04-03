@@ -25,7 +25,7 @@ public class TemplateEnemyAI : MonoBehaviour {
     public Transform target;
     public Vector3 originalPos;
     public TemplateEnemyState currentState;
-    public float playerLastSeenTime;
+    public float playerLastSeenTime = -1000;
     public Vector3 playerLastSeenPosition;
     public bool canAttack = true;
 
@@ -39,6 +39,7 @@ public class TemplateEnemyAI : MonoBehaviour {
         agent.updatePosition = false;
         agent.updateRotation = false;
         originalPos = transform.position;
+        playerLastSeenPosition = originalPos;
         // Behavior test
         currentState = TemplateEnemyState.Approaching;
         attackCooldown = new CoroutineTask(this);
