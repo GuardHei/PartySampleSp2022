@@ -46,14 +46,18 @@ public static class Utilities {
 		maxDistance += radius;
 		
 		hit.distance = maxDistance + 1.0f;
+		bool flag = false;
 
 		foreach (var potential in hits) {
 			// Debug.Log(potential.transform.name);
-			if (potential.distance < hit.distance) hit = potential;
+			if (potential.distance < hit.distance) {
+				hit = potential;
+				flag = true;
+			}
 		}
 		
 		// Debug.Log("Hit " + hit.transform.name);
 
-		return true;
+		return flag;
 	}
 }
