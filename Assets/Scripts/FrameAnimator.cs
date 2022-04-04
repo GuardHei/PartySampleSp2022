@@ -35,6 +35,7 @@ public class FrameAnimator : MonoBehaviour {
 
 	private void Awake() {
 		if (playOnAwake) Play();
+		material = GetComponent<Renderer>().material;
 	}
 
 	private void Update() {

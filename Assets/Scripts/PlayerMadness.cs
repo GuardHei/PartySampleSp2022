@@ -19,10 +19,12 @@ public class PlayerMadness : MonoBehaviour {
     [SerializeField]
     private int _recovCooldown;
 
+    public int CurrentMadness => _Madness;
+
     // Start is called before the first frame update
     void Start()
     {
-        _Madness = 0;
+        _Madness = maxMadness;
         _recovRate = recovRate;
         _recovCooldown = recovCooldown;
         cooldownTask = new CoroutineTask(this);
@@ -61,9 +63,9 @@ public class PlayerMadness : MonoBehaviour {
     IEnumerator recovMadness() {
         while (true) {
             if (canRecover) {
-            gainMadness(_recovRate);
-        }
-        yield return new WaitForSeconds(1);
+                gainMadness(_recovRate);
+            }
+            yield return new WaitForSeconds(1f);
         }
     }
 
