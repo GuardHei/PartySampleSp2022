@@ -21,6 +21,7 @@ public class Interactable : MonoBehaviour {
     private int _interactionCount;
 
     public bool IsInteractable => isInteractable && (!oneTime || _interactionCount == 0);
+    public string InteractionText => !hasReverseInteraction ? interactionText : (_interactionCount % 2 == 1 ? interactionText : reverseInteractionText); 
 
     public void Interact() {
         if (!IsInteractable) return;
@@ -29,8 +30,6 @@ public class Interactable : MonoBehaviour {
         var interaction = onInteraction;
         if (hasReverseInteraction) interaction = _interactionCount % 2 == 1 ? onInteraction : onReverseInteraction;
         interaction?.Invoke(this);
-            
-        print(interactionText);
 
         if (oneTime && autoDisable) gameObject.SetActive(false);
     }
