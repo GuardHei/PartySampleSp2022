@@ -6,47 +6,84 @@ public class Weapon : MonoBehaviour
 {
     //hitbox object, also add checks for crazy meter and attack rate
     [Header("MetaData")]
-    public float attack;
+    public int attackDamage;
+    public float attackRange;
+    public float attackRadius;
     public float fireRate;
     public int crazyThreshold;
     public float pierce; //possible idea, reduction to armor
     public string weaponName;
     private double nextFire = 0.0f;
     [Header("HitBoxes")]
-    public GameObject LMBBox; //Make sure to attach hitbox script
+    public GameObject LMBBox; //prefabs
     public GameObject LMBChargeBox;
     public GameObject RMBBox;
     public GameObject RMBChargeBox;
-    [Header("ParentRigidbody")]
-    public Rigidbody parentRB;
 
-    public void Attack(string fireType)
+    private CapsuleCollider LMBCollider;
+    private CapsuleCollider LMBChargeCollider;
+    private CapsuleCollider RMBCollider;
+    private CapsuleCollider RMBChargeCollider;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        InitializeHitboxes();
+    }
+
+
+    private void InitializeHitboxes()
+    {
+        LMBCollider = LMBBox.GetComponent<CapsuleCollider>();
+        LMBChargeCollider = LMBChargeBox.GetComponent<CapsuleCollider>();
+        RMBCollider = RMBBox.GetComponent<CapsuleCollider>();
+        RMBChargeCollider = RMBChargeBox.GetComponent<CapsuleCollider>();
+
+        LMBCollider.enabled = false;
+        LMBChargeCollider.enabled = false;
+        RMBCollider.enabled = false;
+        RMBChargeCollider.enabled = false;
+
+        HitBox LMBHb = LMBBox.GetComponent<HitBox>();
+        HitBox LMBChargeHb = LMBChargeBox.GetComponent<HitBox>();
+        HitBox RMBHb = RMBBox.GetComponent<HitBox>();
+        HitBox RMBChargeHb = RMBChargeBox.GetComponent<HitBox>();
+
+        LMBHb.attack = attackDamage; //Change Later to be different
+        LMBChargeHb.attack = attackDamage;
+        RMBHb.attack = attackDamage;
+        RMBChargeHb.attack = attackDamage;
+    }
+
+    public void WeaponAttack(bool charge, string type)
     {
         if (CheckConstraints())
         {
-            switch (fireType)
+            switch (type)
             {
-                case "Fire1":
-                    CreateHitbox(LMBBox);
+                case "LMB":
+                    EnableHitbox(LMBCollider);
                     break;
-                case "Fire2":
-                    CreateHitbox(RMBBox);
+                case "RMB":
+                    EnableHitbox(RMBCollider);
                     break;
-                case "Fire3":
-                    if (CheckCrazy()) 
-                    {
-                        CreateHitbox(LMBChargeBox);
-                    }
-                    break;
-                case "Fire4":
+                case "LMBCharge":
                     if (CheckCrazy())
                     {
-                        CreateHitbox(RMBChargeBox);
+                        EnableHitbox(LMBChargeCollider);
+                    }
+                    break;
+                case "RMBCharge":
+                    if (CheckCrazy())
+                    {
+                        EnableHitbox(RMBChargeCollider);
                     }
                     break;
             }
         }
     }
+
+
     private bool CheckCrazy()
     {
         return PlayerStats.GetIntAttribute("curr craziness") > crazyThreshold;
@@ -62,8 +99,31 @@ public class Weapon : MonoBehaviour
         return false;
     }
 
-    private void CreateHitbox(GameObject hitbox) 
+    private void EnableHitbox(Collider hb) 
     {
-        GameObject obj = Instantiate(hitbox, parentRB.GetRelativePointVelocity(new Vector3(0, 0, 5)), Quaternion.identity); //arbitrary amount in front of player
+        hb.enabled = true;
+        ExeAttackAnim(hb);
+
+    }
+
+    private IEnumerator ExeAttackAnim(Collider hb)
+    {
+        float attackAnimDuration = 1.0f;
+        float startTime = Time.time;
+        Vector3 targetPosition = Vector3.back;
+        Vector3 targetRotation = Vector3.back;
+        while (true)
+        {
+            float currTime = Time.time;
+            float animProgress = (currTime - startTime) / attackAnimDuration;
+            transform.position = (Vector3.Lerp(transform.position, targetPosition, animProgress));
+            transform.rotation = (Quaternion.Lerp(transform.rotation, Quaternion.Euler(targetRotation), animProgress));
+            if (animProgress > .99f)
+            {
+                hb.enabled = false;
+                yield break;// exit
+            }
+            yield return CoroutineTask.WaitForNextFrame;
+        }
     }
 }
