@@ -15,10 +15,10 @@ public class RangedWeapon : Weapon
         currAmmo = maxAmmo;
     }
 
-    public void Attack(string type)
+    public void Attack(bool charge)
     {
         if (currAmmo > 0 && Time.timeAsDouble > reloadTimer) {
-            base.Attack(type);
+            base.WeaponAttack(charge, "RMBCharge");
             currAmmo -= 1;
         }
     }
