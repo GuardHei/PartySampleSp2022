@@ -21,6 +21,9 @@ public class TemplateEnemyAI : MonoBehaviour {
     public float minAttackInterval = 1.5f;
     public float maxAttackInterval = 3f;
 
+    public float hitStunTime = 1f;
+    public Color hitStunColor = Color.red;
+
     public NavMeshAgent agent;
     public Rigidbody rigidbody;
     public Transform target;
@@ -29,14 +32,17 @@ public class TemplateEnemyAI : MonoBehaviour {
     public float playerLastSeenTime = -1000;
     public Vector3 playerLastSeenPosition;
     public bool canAttack = true;
-
+    public SimpleEnemyAttack attackMove;
+    
     public CoroutineTask attackCooldown;
+    public CoroutineTask getHitCooldown;
 
     // Start is called before the first frame update
     void Awake() {
         if (target == null && PlayerStats.player) target = PlayerStats.player.transform;
         if (agent == null) agent = GetComponent<NavMeshAgent>();
         if (rigidbody == null) rigidbody = GetComponent<Rigidbody>();
+        if (!attackMove) attackMove = GetComponent<SimpleEnemyAttack>();
         agent.updatePosition = false;
         agent.updateRotation = false;
         originalPos = transform.position;
@@ -44,6 +50,7 @@ public class TemplateEnemyAI : MonoBehaviour {
         // Behavior test
         currentState = TemplateEnemyState.Approaching;
         attackCooldown = new CoroutineTask(this);
+        getHitCooldown = new CoroutineTask(this);
     }
 
     // Update is called once per frame
@@ -123,6 +130,8 @@ public class TemplateEnemyAI : MonoBehaviour {
     void UpdateAttacking()
     {
         //Add attack behaviors
+        agent.ResetPath();
+        agent.nextPosition = rigidbody.position;
         float dist;
         if (!CanSeePlayer(trackingSight, out dist)) {
             currentState = TemplateEnemyState.Seeking;
@@ -185,11 +194,25 @@ public class TemplateEnemyAI : MonoBehaviour {
 
     void Attack() {
         print("Attack");
+        attackMove?.Attack();
     }
 
     IEnumerator AttackCooldown(float cooldown) {
         canAttack = false;
         yield return new WaitForSeconds(cooldown);
+        canAttack = true;
+    }
+
+    public void GetHit() {
+        getHitCooldown.StartCoroutine(HitResponse());
+    }
+
+    IEnumerator HitResponse() {
+        canAttack = false;
+        Material mat = GetComponent<Renderer>().material;
+        mat.SetColor("_Tint", hitStunColor);
+        yield return new WaitForSeconds(hitStunTime);
+        mat.SetColor("_Tint", Color.white);
         canAttack = true;
     }
 

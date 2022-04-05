@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 3604243561935279485}
   - component: {fileID: 3604243561935279487}
   - component: {fileID: 3604243561935279484}
+  - component: {fileID: -5631959297908132744}
   m_Layer: 0
   m_Name: Sample Enemy
   m_TagString: Untagged
@@ -171,7 +172,19 @@ MonoBehaviour:
   destroyOnDeath: 1
   onDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3604243561935279474}
+        m_TargetAssemblyTypeName: TemplateEnemyAI, Assembly-CSharp
+        m_MethodName: GetHit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
   onRecover:
     m_PersistentCalls:
       m_Calls: []
@@ -201,8 +214,10 @@ MonoBehaviour:
   minAttackDistance: 2
   maxAttackDistance: 3
   aggressiveness: 0.5
-  minAttackInterval: 1.5
+  minAttackInterval: 1.2
   maxAttackInterval: 3
+  hitStunTime: 0.8
+  hitStunColor: {r: 1, g: 0, b: 0, a: 1}
   agent: {fileID: 0}
   rigidbody: {fileID: 0}
   target: {fileID: 0}
@@ -211,6 +226,7 @@ MonoBehaviour:
   playerLastSeenTime: 0
   playerLastSeenPosition: {x: 0, y: 0, z: 0}
   canAttack: 1
+  attackMove: {fileID: 0}
 --- !u!54 &3604243561935279485
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -262,3 +278,19 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-5631959297908132744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3604243561935279465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1391d3e026a9c4afabe0b199eaf6064a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitBox: {fileID: 1214486968451737236, guid: 85689ef46325845c686725f42cce0c72, type: 3}
+  offset: {x: 0, y: 0, z: 0.5}
+  attackDuration: 1
+  attackSpeed: 2
