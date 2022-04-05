@@ -14,35 +14,38 @@ public class Weapon : MonoBehaviour
     public float pierce; //possible idea, reduction to armor
     public string weaponName;
     private double nextFire = 0.0f;
+    private CoroutineTask animationTask;
     [Header("HitBoxes")]
-    public GameObject LMBBox; //prefabs
-    public GameObject LMBChargeBox;
-    public GameObject RMBBox;
-    public GameObject RMBChargeBox;
+    public GameObject LMBBoxPrefab; //prefabs
+    public GameObject LMBChargeBoxPrefab;
+    public GameObject RMBBoxPrefab;
+    public GameObject RMBChargeBoxPrefab;
 
-    private CapsuleCollider LMBCollider;
-    private CapsuleCollider LMBChargeCollider;
-    private CapsuleCollider RMBCollider;
-    private CapsuleCollider RMBChargeCollider;
+    private GameObject LMBBox;
+    private GameObject LMBChargeBox;
+    private GameObject RMBBox;
+    private GameObject RMBChargeBox;
 
     // Start is called before the first frame update
     void Start()
     {
+        InstantiateBoxes();
         InitializeHitboxes();
     }
 
-
+    private void InstantiateBoxes()
+    {
+        LMBBox = Instantiate(LMBBoxPrefab, this.transform, false);
+        LMBChargeBox = Instantiate(RMBBoxPrefab, this.transform, false);
+        RMBBox = Instantiate(LMBChargeBoxPrefab, this.transform, false);
+        RMBChargeBox = Instantiate(RMBChargeBoxPrefab, this.transform, false);
+    }
     private void InitializeHitboxes()
     {
-        LMBCollider = LMBBox.GetComponent<CapsuleCollider>();
-        LMBChargeCollider = LMBChargeBox.GetComponent<CapsuleCollider>();
-        RMBCollider = RMBBox.GetComponent<CapsuleCollider>();
-        RMBChargeCollider = RMBChargeBox.GetComponent<CapsuleCollider>();
-
-        LMBCollider.enabled = false;
-        LMBChargeCollider.enabled = false;
-        RMBCollider.enabled = false;
-        RMBChargeCollider.enabled = false;
+        LMBBox.SetActive(false);
+        LMBChargeBox.SetActive(false);
+        RMBBox.SetActive(false);
+        RMBChargeBox.SetActive(false);
 
         HitBox LMBHb = LMBBox.GetComponent<HitBox>();
         HitBox LMBChargeHb = LMBChargeBox.GetComponent<HitBox>();
@@ -62,21 +65,21 @@ public class Weapon : MonoBehaviour
             switch (type)
             {
                 case "LMB":
-                    EnableHitbox(LMBCollider);
+                    EnableHitbox(LMBBox);
                     break;
                 case "RMB":
-                    EnableHitbox(RMBCollider);
+                    EnableHitbox(RMBBox);
                     break;
                 case "LMBCharge":
                     if (CheckCrazy())
                     {
-                        EnableHitbox(LMBChargeCollider);
+                        EnableHitbox(LMBChargeBox);
                     }
                     break;
                 case "RMBCharge":
                     if (CheckCrazy())
                     {
-                        EnableHitbox(RMBChargeCollider);
+                        EnableHitbox(RMBChargeBox);
                     }
                     break;
             }
@@ -99,28 +102,32 @@ public class Weapon : MonoBehaviour
         return false;
     }
 
-    private void EnableHitbox(Collider hb) 
+    private void EnableHitbox(GameObject hb) 
     {
-        hb.enabled = true;
-        ExeAttackAnim(hb);
-
+        hb.SetActive(true);
+        animationTask = new CoroutineTask(this);
+        animationTask.StartCoroutine(ExeAttackAnim(hb));
     }
 
-    private IEnumerator ExeAttackAnim(Collider hb)
+    private IEnumerator ExeAttackAnim(GameObject hb)
     {
-        float attackAnimDuration = 1.0f;
+        float attackAnimDuration = fireRate;
         float startTime = Time.time;
-        Vector3 targetPosition = Vector3.back;
-        Vector3 targetRotation = Vector3.back;
+        Vector3 startPosition = transform.localPosition;
+        Quaternion startRotation = transform.localRotation;
+        Vector3 targetPosition = Vector3.forward;
+        Vector3 targetRotation = new Vector3(0,90,90);
         while (true)
         {
             float currTime = Time.time;
             float animProgress = (currTime - startTime) / attackAnimDuration;
-            transform.position = (Vector3.Lerp(transform.position, targetPosition, animProgress));
-            transform.rotation = (Quaternion.Lerp(transform.rotation, Quaternion.Euler(targetRotation), animProgress));
-            if (animProgress > .99f)
+            transform.localPosition = (Vector3.Lerp(transform.localPosition, targetPosition, animProgress));
+            transform.localRotation = (Quaternion.Lerp(transform.localRotation, Quaternion.Euler(targetRotation), animProgress));
+            if (animProgress > fireRate - 0.01f)
             {
-                hb.enabled = false;
+                hb.SetActive(false);
+                transform.localPosition = startPosition;
+                transform.localRotation = startRotation;
                 yield break;// exit
             }
             yield return CoroutineTask.WaitForNextFrame;
