@@ -7,8 +7,10 @@ public class Weapon : MonoBehaviour
     //hitbox object, also add checks for crazy meter and attack rate
     [Header("MetaData")]
     public int attackDamage;
-    public float attackRange;
-    public float attackRadius;
+    public Vector3 attackEndPosition = Vector3.forward;
+    public Vector3 attackEndRotation = new Vector3(.0f, 90f, .0f);
+    public AnimationCurve attackCurve;
+    public float attackDuration = .2f;
     public float fireRate;
     public int crazyThreshold;
     public float pierce; //possible idea, reduction to armor
@@ -29,6 +31,7 @@ public class Weapon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        animationTask = new CoroutineTask(this);
         InstantiateBoxes();
         InitializeHitboxes();
     }
@@ -36,8 +39,8 @@ public class Weapon : MonoBehaviour
     private void InstantiateBoxes()
     {
         LMBBox = Instantiate(LMBBoxPrefab, this.transform, false);
-        LMBChargeBox = Instantiate(RMBBoxPrefab, this.transform, false);
-        RMBBox = Instantiate(LMBChargeBoxPrefab, this.transform, false);
+        LMBChargeBox = Instantiate(LMBChargeBoxPrefab, this.transform, false);
+        RMBBox = Instantiate(RMBBoxPrefab, this.transform, false);
         RMBChargeBox = Instantiate(RMBChargeBoxPrefab, this.transform, false);
     }
     private void InitializeHitboxes()
@@ -105,25 +108,27 @@ public class Weapon : MonoBehaviour
     private void EnableHitbox(GameObject hb) 
     {
         hb.SetActive(true);
-        animationTask = new CoroutineTask(this);
         animationTask.StartCoroutine(ExeAttackAnim(hb));
     }
 
     private IEnumerator ExeAttackAnim(GameObject hb)
     {
-        float attackAnimDuration = fireRate;
+        float attackAnimDuration = attackDuration;
         float startTime = Time.time;
         Vector3 startPosition = transform.localPosition;
         Quaternion startRotation = transform.localRotation;
-        Vector3 targetPosition = Vector3.forward;
-        Vector3 targetRotation = new Vector3(0,90,90);
+        Vector3 targetPosition = attackEndPosition;
+        Quaternion targetRotation = Quaternion.Euler(attackEndRotation);
         while (true)
         {
             float currTime = Time.time;
             float animProgress = (currTime - startTime) / attackAnimDuration;
-            transform.localPosition = (Vector3.Lerp(transform.localPosition, targetPosition, animProgress));
-            transform.localRotation = (Quaternion.Lerp(transform.localRotation, Quaternion.Euler(targetRotation), animProgress));
-            if (animProgress > fireRate - 0.01f)
+            animProgress = attackCurve.Evaluate(animProgress);
+            animProgress = Mathf.Clamp01(animProgress);
+            transform.localPosition = (Vector3.Lerp(startPosition, targetPosition, animProgress));
+            transform.localRotation = (Quaternion.Lerp(startRotation, targetRotation, animProgress));
+            // print(animProgress.ToString("F3"));
+            if (animProgress == 1f)
             {
                 hb.SetActive(false);
                 transform.localPosition = startPosition;
