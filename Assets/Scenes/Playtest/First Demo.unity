@@ -16780,7 +16780,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Hand Sanitizer
+  m_text: 'Boba
+
 
     [8]'
   m_isRightToLeft: 0
@@ -17491,7 +17492,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 30, y: 0}
-  m_SizeDelta: {x: 300, y: 800}
+  m_SizeDelta: {x: 600, y: 800}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1823418819
 MonoBehaviour:
@@ -17733,6 +17734,7 @@ MonoBehaviour:
   id: weed
   key: 48
   recover: 60
+  madness: {fileID: 1922191965}
 --- !u!114 &1922191962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17749,6 +17751,7 @@ MonoBehaviour:
   id: boba
   key: 56
   cure: 60
+  health: {fileID: 1922191966}
 --- !u!114 &1922191963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17765,6 +17768,7 @@ MonoBehaviour:
   id: hand sanitizer
   key: 55
   cure: 30
+  health: {fileID: 1922191966}
 --- !u!114 &1922191964
 MonoBehaviour:
   m_ObjectHideFlags: 0

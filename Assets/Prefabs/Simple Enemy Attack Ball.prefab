@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ff4b005195e4c24bffc31094a3d5f6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
+  velocity: {x: 0, y: 0, z: 0}
   duration: 0
   rigidbody: {fileID: 1214486968451737238}
 --- !u!114 &-5367880810686817703
@@ -143,6 +143,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cc9d8e360ed4c9ba4cbe3f5a5e741d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageType: 0
+  damageType: 2
   canBeBlocked: 1
-  attack: 20
+  attack: 30

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
@@ -59,8 +60,14 @@ public static class PlayerStats {
     public static int GetItemMaxNum(string itemName) => ItemsMax.ContainsKey(itemName) ? ItemsMax[itemName] : -1;
 
     public static bool UseItem(string itemName, int amount = 1) {
+        // var debugScript = GameObject.FindObjectOfType<GameOver>();
+        // TextMeshProUGUI debugText = null;
+        // if (debugScript) debugText = debugScript.debugText;
+        // if (debugText) debugText.text += "use item " + itemName + "\n";
         if (!Items.ContainsKey(itemName)) return false;
+        // if (debugText) debugText.text += "contains\n";
         if (Items[itemName] < amount) return false;
+        // if (debugText) debugText.text += "has enough amount " + amount + "\n";
         Items[itemName] -= amount;
         return true;
     }
