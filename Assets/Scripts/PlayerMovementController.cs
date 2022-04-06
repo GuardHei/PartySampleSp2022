@@ -107,7 +107,7 @@ public class PlayerMovementController : MonoBehaviour {
 	private void FixedUpdate() => _needsUpdate = true;
 
 	private void Update() {
-		if (!_needsUpdate) return;
+		// if (!_needsUpdate) return;
 		_needsUpdate = false;
 		UpdateInput();
 		UpdateMovement();

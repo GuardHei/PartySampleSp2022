@@ -17,7 +17,8 @@ public class SimpleEnemyAttack : MonoBehaviour {
     public void Attack() {
         var atk = Instantiate(hitBox, transform.TransformPoint(offset), transform.rotation);
         var autoMove = atk.GetComponent<AutoMove>();
-        autoMove.speed = attackSpeed;
+        autoMove.velocity = attackSpeed * (PlayerStats.player.transform.position - transform.position).normalized;
         autoMove.duration = attackDuration;
+        Physics.IgnoreCollision(autoMove.GetComponent<Collider>(), GetComponent<Collider>(), true);
     }
 }

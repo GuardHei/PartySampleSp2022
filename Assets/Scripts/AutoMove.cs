@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(HitBox))]
 public class AutoMove : MonoBehaviour {
 
-    public float speed;
+    public Vector3 velocity;
     public float duration;
     public Rigidbody rigidbody;
 
@@ -23,7 +23,7 @@ public class AutoMove : MonoBehaviour {
         }
         
         if (_destroyFlag) Destroy(gameObject, .5f);
-        rigidbody.MovePosition(transform.forward * speed * Time.deltaTime);
+        rigidbody.MovePosition(transform.position + velocity * Time.deltaTime);
     }
 
     private void OnTriggerEnter() {

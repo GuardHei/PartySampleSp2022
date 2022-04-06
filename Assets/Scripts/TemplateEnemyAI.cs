@@ -108,7 +108,7 @@ public class TemplateEnemyAI : MonoBehaviour {
         }
 
         if (dist <= minAttackDistance) {
-            attackCooldown.StartCoroutine(AttackCooldown(Random.Range(minAttackInterval, maxAttackInterval)));
+            attackCooldown.StartCoroutine(AttackCooldown(minAttackInterval));
             currentState = TemplateEnemyState.Attacking;
             return;
         }

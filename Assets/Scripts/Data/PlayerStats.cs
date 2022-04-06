@@ -21,6 +21,13 @@ public static class PlayerStats {
     public static readonly List<string> armors = new List<string>(10);
 
     static PlayerStats() {
+        Init();
+        SceneManager.activeSceneChanged += (s0, s1) => UpdatePlayerObject();
+    }
+
+    public static void Init() {
+        UpdatePlayerObject();
+        
         IntAttributes["max health"] = 100;
         IntAttributes["curr health"] = 100;
         IntAttributes["max madness"] = 100;
@@ -37,8 +44,6 @@ public static class PlayerStats {
         ItemsMax["hand sanitizer"] = 99;
         ItemsMax["boba"] = 99;
         ItemsMax["weed"] = 99;
-
-        SceneManager.activeSceneChanged += (s0, s1) => UpdatePlayerObject();
     }
 
     public static int GetIntAttribute(string attr, int defaultValue = 0) => !IntAttributes.ContainsKey(attr) ? defaultValue : IntAttributes[attr];
@@ -51,12 +56,12 @@ public static class PlayerStats {
     
     public static int GetItemNum(string itemName) => Items.ContainsKey(itemName) ? Items[itemName] : 0;
     
-    public static int GetItemMaxNum(string itemName) => ItemsMax.ContainsKey(itemName) ? ItemsMax[itemName] : 0;
+    public static int GetItemMaxNum(string itemName) => ItemsMax.ContainsKey(itemName) ? ItemsMax[itemName] : -1;
 
     public static bool UseItem(string itemName, int amount = 1) {
         if (!Items.ContainsKey(itemName)) return false;
         if (Items[itemName] < amount) return false;
-        Items[itemName] = 0;
+        Items[itemName] -= amount;
         return true;
     }
     
