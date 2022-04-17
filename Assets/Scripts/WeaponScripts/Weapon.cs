@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Weapon : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class Weapon : MonoBehaviour
     public float pierce; //possible idea, reduction to armor
     public string weaponName;
     private double nextFire = 0.0f;
+    public UnityEvent attackEvent;
     private CoroutineTask animationTask;
     [Header("HitBoxes")]
     public GameObject LMBBoxPrefab; //prefabs
@@ -26,9 +28,12 @@ public class Weapon : MonoBehaviour
     private GameObject RMBBox;
     private GameObject RMBChargeBox;
 
+
     // Start is called before the first frame update
     void Start()
     {
+        if (attackEvent == null)
+            attackEvent = new UnityEvent();
         InstantiateBoxes();
         InitializeHitboxes();
     }
@@ -36,8 +41,8 @@ public class Weapon : MonoBehaviour
     private void InstantiateBoxes()
     {
         LMBBox = Instantiate(LMBBoxPrefab, this.transform, false);
-        LMBChargeBox = Instantiate(RMBBoxPrefab, this.transform, false);
-        RMBBox = Instantiate(LMBChargeBoxPrefab, this.transform, false);
+        LMBChargeBox = Instantiate(LMBChargeBoxPrefab, this.transform, false);
+        RMBBox = Instantiate(RMBBoxPrefab, this.transform, false);
         RMBChargeBox = Instantiate(RMBChargeBoxPrefab, this.transform, false);
     }
     private void InitializeHitboxes()
@@ -62,6 +67,7 @@ public class Weapon : MonoBehaviour
     {
         if (CheckConstraints())
         {
+            attackEvent.Invoke();
             switch (type)
             {
                 case "LMB":
@@ -111,7 +117,7 @@ public class Weapon : MonoBehaviour
 
     private IEnumerator ExeAttackAnim(GameObject hb)
     {
-        float attackAnimDuration = fireRate;
+        float attackAnimDuration = 1.0f;
         float startTime = Time.time;
         Vector3 startPosition = transform.localPosition;
         Quaternion startRotation = transform.localRotation;
