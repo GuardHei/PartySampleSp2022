@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SimpleEnemyAttack : MonoBehaviour {
 
@@ -9,6 +10,7 @@ public class SimpleEnemyAttack : MonoBehaviour {
     public Vector3 offset = new Vector3(.0f, .0f, .6f);
     public float attackDuration = 1.0f;
     public float attackSpeed = 1.0f;
+    public UnityEvent onAttack;
 
     private void Awake() {
         // hitBox.SetActive(false);
@@ -20,5 +22,6 @@ public class SimpleEnemyAttack : MonoBehaviour {
         autoMove.velocity = attackSpeed * (PlayerStats.player.transform.position - transform.position).normalized;
         autoMove.duration = attackDuration;
         Physics.IgnoreCollision(autoMove.GetComponent<Collider>(), GetComponent<Collider>(), true);
+        onAttack?.Invoke();
     }
 }

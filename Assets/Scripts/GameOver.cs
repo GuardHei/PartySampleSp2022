@@ -11,12 +11,13 @@ public class GameOver : MonoBehaviour {
     public KeyCode restartKey = KeyCode.R;
     public KeyCode quitKey = KeyCode.Escape;
 
+    public AudioSource srcDontMuteOnDeath;
     public GameObject defeatUI;
     public GameObject debugUI;
     public TextMeshProUGUI debugText;
 
     private void Awake() {
-        print(debugUI.name);
+        // print(debugUI.name);
     }
 
     private void Update() {
@@ -31,6 +32,8 @@ public class GameOver : MonoBehaviour {
         foreach (var audio in FindObjectsOfType<AudioSource>()) audio.mute = true;
         foreach (var item in PlayerStats.player.GetComponents<Item>()) item.enabled = false;
         foreach (var sideMusic in FindObjectsOfType<SideMusicController>()) sideMusic.enabled = false;
+
+        if (srcDontMuteOnDeath) srcDontMuteOnDeath.mute = false;
 
         if (debugText) debugText.text += "1\n";
         

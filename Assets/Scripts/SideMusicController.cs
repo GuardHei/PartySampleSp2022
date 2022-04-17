@@ -11,6 +11,7 @@ public class SideMusicController : MonoBehaviour {
     public float minDistance = .5f;
     public float maxDistance = 10f;
     public float affectDistance = 16.5f;
+    public float fadeCoefficient = 1f;
     public AnimationCurve falloff;
 
     private void Awake() {
@@ -24,6 +25,7 @@ public class SideMusicController : MonoBehaviour {
         if (!MusicManager.instance) return;
         var dist = (MusicManager.instance.transform.position - transform.position).magnitude;
         if (dist > affectDistance) return;
+        
         if (dist > maxDistance) {
             src.volume = 0f;
             MusicManager.instance.src.volume = 1f;
@@ -35,7 +37,7 @@ public class SideMusicController : MonoBehaviour {
         } else {
             var t = falloff.Evaluate(Mathf.Clamp01((dist - minDistance) / (maxDistance - minDistance)));
             src.volume = t;
-            MusicManager.instance.src.volume = Mathf.Clamp01(1.0f - t * 2f);
+            MusicManager.instance.src.volume = Mathf.Clamp01(1.0f - t * fadeCoefficient);
             // print(3);
         }
     }
