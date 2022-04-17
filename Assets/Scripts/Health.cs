@@ -46,6 +46,7 @@ public class Health : MonoBehaviour {
 
     public void SelfDestroy() {
         GetComponent<Renderer>().enabled = false;
+        if (TryGetComponent<SimpleEnemyAttack>(out var attack)) attack.flag = false;
         Destroy(gameObject, 3f);
     }
 }
