@@ -45,6 +45,7 @@ public class Health : MonoBehaviour {
     }
 
     public void SelfDestroy() {
-        Destroy(gameObject);
+        GetComponent<Renderer>().enabled = false;
+        Destroy(gameObject, 3f);
     }
 }
