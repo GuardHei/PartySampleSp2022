@@ -43,7 +43,7 @@ public class WeaponController : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            Attack(false, "RMB");
+            Attack(false, "RMBCharge");
         }
     }
 

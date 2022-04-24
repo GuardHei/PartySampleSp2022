@@ -60,6 +60,7 @@ public class PlayerMadness : MonoBehaviour {
     }
 
 
+
     IEnumerator recovMadness() {
         while (true) {
             if (canRecover) {
