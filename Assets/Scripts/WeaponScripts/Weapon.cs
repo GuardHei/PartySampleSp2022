@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Weapon : MonoBehaviour
 {
     //hitbox object, also add checks for crazy meter and attack rate
     [Header("MetaData")]
     public int attackDamage;
+    public int rangeDamage = 70;
     public Vector3 attackEndPosition = Vector3.forward;
     public Vector3 attackEndRotation = new Vector3(.0f, 90f, .0f);
     public AnimationCurve attackCurve;
@@ -17,6 +19,7 @@ public class Weapon : MonoBehaviour
     public string weaponName;
     private double nextFire = 0.0f;
     private CoroutineTask animationTask;
+    public UnityEvent onAttack;
     [Header("HitBoxes")]
     public GameObject LMBBoxPrefab; //prefabs
     public GameObject LMBChargeBoxPrefab;
@@ -69,7 +72,7 @@ public class Weapon : MonoBehaviour
         LMBChargeHb.attack = attackDamage;
         RMBHb.attack = attackDamage;
         RMBChargeHb.attack = attackDamage;
-        bulletHb.attack = attackDamage;
+        bulletHb.attack = rangeDamage;
 
     }
 
@@ -77,6 +80,7 @@ public class Weapon : MonoBehaviour
     {
         if (CheckConstraints())
         {
+            onAttack?.Invoke();
             switch (type)
             {
                 case "LMB":
@@ -99,7 +103,7 @@ public class Weapon : MonoBehaviour
                         //RMBChargeBox = Instantiate(RMBChargeBoxPrefab, this.transform, false);
                         //EnableHitbox(RMBChargeBox);
                         //Ranged attack
-                        rangedAttack();
+                        RangedAttack();
                         //animationTask.StartCoroutine(ExeAttackAnim(RMBChargeBox));
                     }
                     break;
@@ -158,7 +162,7 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    private void rangedAttack()
+    private void RangedAttack()
     {
         Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
@@ -171,7 +175,7 @@ public class Weapon : MonoBehaviour
         {
             target = ray.GetPoint(300);
         }
-        Debug.Log("Ranged attack: " + target + " | " + hit);
+        // Debug.Log("Ranged attack: " + target + " | " + hit);
         
         var atk = Instantiate(bulletHitBox, transform.TransformPoint(offset), transform.rotation);
         var autoMove = atk.GetComponent<AutoMove>();
