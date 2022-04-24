@@ -9,14 +9,18 @@ Shader "Custom/VerticalBillboard" {
     SubShader {
         
         Tags { 
-            "Queue" = "AlphaTest"
-            "RenderType" = "TransparentCutout"
+            // "Queue" = "AlphaTest"
+            // "RenderType" = "TransparentCutout"
+            "Queue" = "Transparent"
+            "RenderType" = "Transparent"
             "IgnoreProjector" = "True"
             "DisableBatching" = "True" 
         }
 
         Pass
         {
+            Blend SrcAlpha OneMinusSrcAlpha
+            
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
