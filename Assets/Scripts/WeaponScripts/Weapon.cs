@@ -8,6 +8,7 @@ public class Weapon : MonoBehaviour
     //hitbox object, also add checks for crazy meter and attack rate
     [Header("MetaData")]
     public int attackDamage;
+    public int rangeDamage = 70;
     public Vector3 attackEndPosition = Vector3.forward;
     public Vector3 attackEndRotation = new Vector3(.0f, 90f, .0f);
     public AnimationCurve attackCurve;
@@ -17,8 +18,8 @@ public class Weapon : MonoBehaviour
     public float pierce; //possible idea, reduction to armor
     public string weaponName;
     private double nextFire = 0.0f;
-    public UnityEvent attackEvent;
     private CoroutineTask animationTask;
+    public UnityEvent onAttack;
     [Header("HitBoxes")]
     public GameObject LMBBoxPrefab; //prefabs
     public GameObject LMBChargeBoxPrefab;
@@ -29,6 +30,14 @@ public class Weapon : MonoBehaviour
     private GameObject LMBChargeBox;
     private GameObject RMBBox;
     private GameObject RMBChargeBox;
+    
+    //For ranged attacks
+    public GameObject bulletHitBox;
+    public Vector3 offset = new Vector3(.0f, .0f, .6f);
+    public float attackSpeed = 1.0f;
+    public Camera cam;
+
+    public PlayerMadness playerMadness;
 
 
     // Start is called before the first frame update
@@ -55,23 +64,27 @@ public class Weapon : MonoBehaviour
         LMBChargeBox.SetActive(false);
         RMBBox.SetActive(false);
         RMBChargeBox.SetActive(false);
+        bulletHitBox.SetActive(true);
 
         HitBox LMBHb = LMBBox.GetComponent<HitBox>();
         HitBox LMBChargeHb = LMBChargeBox.GetComponent<HitBox>();
         HitBox RMBHb = RMBBox.GetComponent<HitBox>();
         HitBox RMBChargeHb = RMBChargeBox.GetComponent<HitBox>();
+        HitBox bulletHb = bulletHitBox.GetComponent<HitBox>();
 
         LMBHb.attack = attackDamage; //Change Later to be different
         LMBChargeHb.attack = attackDamage;
         RMBHb.attack = attackDamage;
         RMBChargeHb.attack = attackDamage;
+        bulletHb.attack = rangeDamage;
+
     }
 
     public void WeaponAttack(bool charge, string type)
     {
         if (CheckConstraints())
         {
-            attackEvent.Invoke();
+            onAttack?.Invoke();
             switch (type)
             {
                 case "LMB":
@@ -87,9 +100,15 @@ public class Weapon : MonoBehaviour
                     }
                     break;
                 case "RMBCharge":
-                    if (CheckCrazy())
+                    //Consume player madness. Using crazyThreshold as madness consumer per attack
+                    if (playerMadness.CurrentMadness > crazyThreshold)
                     {
-                        EnableHitbox(RMBChargeBox);
+                        playerMadness.consumeMadness(50, false);
+                        //RMBChargeBox = Instantiate(RMBChargeBoxPrefab, this.transform, false);
+                        //EnableHitbox(RMBChargeBox);
+                        //Ranged attack
+                        RangedAttack();
+                        //animationTask.StartCoroutine(ExeAttackAnim(RMBChargeBox));
                     }
                     break;
             }
@@ -99,7 +118,8 @@ public class Weapon : MonoBehaviour
 
     private bool CheckCrazy()
     {
-        return PlayerStats.GetIntAttribute("curr craziness") > crazyThreshold;
+        //return PlayerStats.GetIntAttribute("curr craziness") > crazyThreshold;
+        return playerMadness.CurrentMadness >= crazyThreshold;
     }
         
     private bool CheckConstraints()
@@ -144,5 +164,28 @@ public class Weapon : MonoBehaviour
             }
             yield return CoroutineTask.WaitForNextFrame;
         }
+    }
+
+    private void RangedAttack()
+    {
+        Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        RaycastHit hit;
+        Vector3 target;
+        if (Physics.Raycast(ray, out hit))
+        {
+            target = hit.point;
+        }
+        else
+        {
+            target = ray.GetPoint(300);
+        }
+        // Debug.Log("Ranged attack: " + target + " | " + hit);
+        
+        var atk = Instantiate(bulletHitBox, transform.TransformPoint(offset), transform.rotation);
+        var autoMove = atk.GetComponent<AutoMove>();
+        autoMove.velocity = attackSpeed * (target -  PlayerStats.player.transform.position).normalized;
+        autoMove.duration = attackDuration;
+        //Physics.IgnoreCollision(autoMove.GetComponent<Collider>(), GetComponent<Collider>(), true);
+        //onAttack?.Invoke();
     }
 }

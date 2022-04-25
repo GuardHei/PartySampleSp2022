@@ -320,6 +320,7 @@ MonoBehaviour:
   offset: {x: 0, y: 0, z: 0}
   attackDuration: 2
   attackSpeed: 2
+  flag: 1
   onAttack:
     m_PersistentCalls:
       m_Calls:
@@ -445,13 +446,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   src: {fileID: 229763608578133386}
   hitSfx:
-  - {fileID: 8300000, guid: 1e405c8fd6e7d4d2fb40fe988de2e747, type: 3}
-  - {fileID: 8300000, guid: ddb04e814b2d2473784b03c354092208, type: 3}
-  - {fileID: 8300000, guid: 329ad24f78e344433a458a25be6edd67, type: 3}
+  - {fileID: 8300000, guid: 9c754c0c6f36843f5bd63f48dea7f249, type: 3}
+  - {fileID: 8300000, guid: 8303a2509d6b64bba859e5b01314e958, type: 3}
+  - {fileID: 8300000, guid: 1bffdcbc7b7144ea295b80e92da92033, type: 3}
   deathSfx:
-  - {fileID: 8300000, guid: 91ecb04099efa4cd5bed39e93bbbc618, type: 3}
-  - {fileID: 8300000, guid: 9cef218d853e444168e9de082d8f8bbd, type: 3}
+  - {fileID: 8300000, guid: b0e95d6fdd1e646428a28adabea96c1b, type: 3}
+  - {fileID: 8300000, guid: 96d4b58b439884f6492c9e0990e1d672, type: 3}
   attackSfx:
-  - {fileID: 8300000, guid: 27028cae70de04e1b909bcf1ade850ce, type: 3}
-  - {fileID: 8300000, guid: 6d9b41b72b202463fb3ca5e0222d330c, type: 3}
-  - {fileID: 8300000, guid: 975588843670447c3a5a52616ea7a20c, type: 3}
+  - {fileID: 8300000, guid: 412403fff03494c578d6deb64459af64, type: 3}
+  - {fileID: 8300000, guid: 565ab5d42bb5e446a972293f6de33fbb, type: 3}
+  - {fileID: 8300000, guid: f55e6f32e138a4792b5bc8c64af3402f, type: 3}

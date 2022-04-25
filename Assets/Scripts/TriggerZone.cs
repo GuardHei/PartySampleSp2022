@@ -7,6 +7,8 @@ using UnityEngine.Events;
 public class TriggerZone : MonoBehaviour {
 
     public bool playerOnly = true;
+    public bool requiresItem;
+    public string itemId;
     public LayerMask mask;
     public float enterEventDelay;
     public UnityEvent enterEvent;
@@ -25,6 +27,7 @@ public class TriggerZone : MonoBehaviour {
         int layer = 1 << other.gameObject.layer;
         if ((mask.value & layer) != 0) {
             if (!playerOnly || other.CompareTag("Player")) {
+                if (requiresItem && !PlayerStats.CheckItemExistence(itemId)) return;
                 if (enterEventDelay == .0f) enterEvent?.Invoke();
                 else StartCoroutine(CoroutineTask.TriggerEventDelayed(_waitToEnter, enterEvent));
             }
@@ -35,6 +38,7 @@ public class TriggerZone : MonoBehaviour {
         int layer = 1 << other.gameObject.layer;
         if ((mask.value & layer) != 0) {
             if (!playerOnly || other.CompareTag("Player")) {
+                if (requiresItem && !PlayerStats.CheckItemExistence(itemId)) return;
                 if (exitEventDelay == .0f) exitEvent?.Invoke();
                 else StartCoroutine(CoroutineTask.TriggerEventDelayed(_waitToExit, exitEvent));
             }
