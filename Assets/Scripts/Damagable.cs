@@ -31,7 +31,7 @@ public class Damagable : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
-        Debug.Log("Enters Damagable");
+        // Debug.Log("Enters Damagable");
         bool flag = false;
         int layer = 1 << other.gameObject.layer;
         if ((damagedByLayers.value & layer) != 0) flag = true;

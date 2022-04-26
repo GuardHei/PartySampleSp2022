@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1214486968451737237}
   - component: {fileID: -5367880810686817703}
   m_Layer: 0
-  m_Name: Simple Enemy Attack Ball
+  m_Name: Kiwi Attack Ball
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 01db8a4ffdb134fadb857ed5bdd0ede3, type: 2}
+  - {fileID: 2100000, guid: fb5f885ef44ee401bb7ae499ece4d76a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -145,4 +145,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageType: 2
   canBeBlocked: 1
-  attack: 25
+  attack: 30

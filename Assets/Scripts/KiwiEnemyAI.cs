@@ -9,6 +9,8 @@ using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class KiwiEnemyAI : MonoBehaviour {
+
+    public List<Texture2D> kiwiFrames;
     
     public float sight = 5f;
     public float trackingSight = 12f;
@@ -29,6 +31,7 @@ public class KiwiEnemyAI : MonoBehaviour {
 
     public NavMeshAgent agent;
     public Rigidbody rigidbody;
+    public FrameAnimator frameAnimator;
     public Transform target;
     public Vector3 originalPos;
     public TemplateEnemyState currentState;
@@ -116,6 +119,7 @@ public class KiwiEnemyAI : MonoBehaviour {
         if (dist <= minAttackDistance) {
             currentState = TemplateEnemyState.Attacking;
             //currentState = TemplateEnemyState.Running;
+            SwitchAnimation();
             return;
         }
 
@@ -142,16 +146,19 @@ public class KiwiEnemyAI : MonoBehaviour {
         Debug.Log(!CanSeePlayer(trackingSight, out dist));
         if (!CanSeePlayer(trackingSight, out dist)) {
             currentState = TemplateEnemyState.Seeking;
+            SwitchAnimation();
             return;
         }
         if (dist > maxAttackDistance) {
             currentState = TemplateEnemyState.Approaching;
+            SwitchAnimation();
             return;
         }
 
         if (dist < runAwayDistance)
         {
             currentState = TemplateEnemyState.Running;
+            SwitchAnimation();
             return;
         }
         
@@ -176,6 +183,7 @@ public class KiwiEnemyAI : MonoBehaviour {
         {
             agent.speed = baseSpeed;
             currentState = TemplateEnemyState.Attacking;
+            SwitchAnimation();
             return;
         }
 
@@ -183,6 +191,16 @@ public class KiwiEnemyAI : MonoBehaviour {
         Vector3 fromPlayer = rigidbody.position - target.position;
         Vector3 nextPos = rigidbody.position + fromPlayer;
         MoveTowards(nextPos);
+    }
+
+    void SwitchAnimation() {
+        if (currentState == TemplateEnemyState.Attacking) {
+            frameAnimator.frames[0] = kiwiFrames[2];
+            frameAnimator.frames[1] = kiwiFrames[3];
+        } else {
+            frameAnimator.frames[0] = kiwiFrames[0];
+            frameAnimator.frames[1] = kiwiFrames[1];
+        }
     }
 
     void MoveTowards(Vector3 pos) {

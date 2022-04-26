@@ -18,7 +18,6 @@ GameObject:
   - component: {fileID: 3604243561935279485}
   - component: {fileID: 3604243561935279487}
   - component: {fileID: 3604243561935279484}
-  - component: {fileID: 2673679799837031812}
   - component: {fileID: 229763608578133386}
   - component: {fileID: 8548202749800018805}
   - component: {fileID: -4916730684090773727}
@@ -53,7 +52,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3604243561935279465}
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &3604243561935279467
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -74,7 +73,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 384cf53a0a3f34143a8262663762f990, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -125,10 +124,8 @@ MonoBehaviour:
   loop: 1
   fps: 4
   frames:
-  - {fileID: 2800000, guid: 290fe03f37538497aa4ec9f4468d9b52, type: 3}
-  - {fileID: 2800000, guid: 1f2dfad5ec4754067b5e97a1a9c54104, type: 3}
-  - {fileID: 2800000, guid: 8ec6875b49aee42ba8b637b1e65a760e, type: 3}
-  - {fileID: 2800000, guid: 1f2dfad5ec4754067b5e97a1a9c54104, type: 3}
+  - {fileID: 2800000, guid: 9321566b248b1461d8feaa6e19c613a5, type: 3}
+  - {fileID: 2800000, guid: d58deabccb42b4fc293751cf033fc2b3, type: 3}
   autoRefresh: 1
   material: {fileID: 2100000, guid: 92e0cee391b2c4c2a9fd513348a05d55, type: 2}
   _isPlaying: 0
@@ -269,23 +266,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.25
-  m_Height: 1
+  m_Height: 0.6
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!136 &2673679799837031812
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3604243561935279465}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.4
-  m_Height: 0
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: -0.1, z: 0}
 --- !u!82 &229763608578133386
 AudioSource:
   m_ObjectHideFlags: 0
@@ -418,13 +401,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61942d0e11560c747a2663fdc2ce7a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sight: 5
+  kiwiFrames:
+  - {fileID: 2800000, guid: 9321566b248b1461d8feaa6e19c613a5, type: 3}
+  - {fileID: 2800000, guid: d58deabccb42b4fc293751cf033fc2b3, type: 3}
+  - {fileID: 2800000, guid: 30232555df2144e65ad35d49a43e73f4, type: 3}
+  - {fileID: 2800000, guid: af352eb1b09f241aaa63f86bb09d02a4, type: 3}
+  sight: 10
   trackingSight: 16
   cannotSeeThrough:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   maxLostTime: 5
-  minAttackDistance: 7
+  minAttackDistance: 6
   maxAttackDistance: 8
   runAwayDistance: 4
   aggressiveness: 0.5
@@ -435,13 +423,14 @@ MonoBehaviour:
   hitStunColor: {r: 1, g: 0, b: 0, a: 1}
   agent: {fileID: 3604243561935279473}
   rigidbody: {fileID: 3604243561935279485}
+  frameAnimator: {fileID: 3604243561935279476}
   target: {fileID: 0}
   originalPos: {x: 0, y: 0, z: 0}
   currentState: 0
   playerLastSeenTime: -1000
   playerLastSeenPosition: {x: 0, y: 0, z: 0}
   canAttack: 1
-  attackMove: {fileID: 0}
+  attackMove: {fileID: 8063357643013936005}
 --- !u!136 &1043327525284812807
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -452,10 +441,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1
+  m_Radius: 0.25
+  m_Height: 0.25
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!114 &8063357643013936005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -468,7 +457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1391d3e026a9c4afabe0b199eaf6064a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitBox: {fileID: 1214486968451737236, guid: 85689ef46325845c686725f42cce0c72, type: 3}
+  hitBox: {fileID: 1214486968451737236, guid: 0c930b6ce253f4b7783ea001fc837cb1, type: 3}
   offset: {x: 0, y: 0, z: 0.6}
   attackDuration: 4
   attackSpeed: 15
