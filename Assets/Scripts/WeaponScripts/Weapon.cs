@@ -43,9 +43,6 @@ public class Weapon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (attackEvent == null)
-            attackEvent = new UnityEvent();
-
         animationTask = new CoroutineTask(this);
         InstantiateBoxes();
         InitializeHitboxes();

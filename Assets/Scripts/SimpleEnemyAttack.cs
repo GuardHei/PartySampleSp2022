@@ -8,8 +8,8 @@ public class SimpleEnemyAttack : MonoBehaviour {
 
     public GameObject hitBox;
     public Vector3 offset = new Vector3(.0f, .0f, .6f);
-    public float attackDuration = 1.0f;
-    public float attackSpeed = 1.0f;
+    public float attackDuration = 1f;
+    public float attackSpeed = 1f;
     public bool flag = true;
     public UnityEvent onAttack;
 
