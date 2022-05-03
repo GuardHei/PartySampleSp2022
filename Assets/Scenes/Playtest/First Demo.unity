@@ -253,7 +253,7 @@ MonoBehaviour:
   m_text: 'Weed
 
 
-    [0]'
+    [3]'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -893,7 +893,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Locked
 
-    <color=white>==<b>Need White Key</b>==</color>'
+    <color=white>==<b>Need Key</b>==</color>'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1672,7 +1672,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Hand Sanitizer
 
-    [7]'
+    [1]'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -33045,7 +33045,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 9.9, y: 1.2}
-  m_SizeDelta: {x: 1.8, y: 0.9}
+  m_SizeDelta: {x: 1.4, y: 0.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &937543718
 GameObject:
@@ -35634,7 +35634,7 @@ MonoBehaviour:
   m_text: 'Boba
 
 
-    [8]'
+    [2]'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -36656,7 +36656,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9144689901808252282, guid: 34a7ce366832f4b67b1e8fe34e85ff9a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 63.052
+      value: 63.415
       objectReference: {fileID: 0}
     - target: {fileID: 9144689901808252282, guid: 34a7ce366832f4b67b1e8fe34e85ff9a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -36686,9 +36686,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9144689901808252283, guid: 34a7ce366832f4b67b1e8fe34e85ff9a, type: 3}
+      propertyPath: m_Radius
+      value: 0.6
+      objectReference: {fileID: 0}
     - target: {fileID: 9144689901808252284, guid: 34a7ce366832f4b67b1e8fe34e85ff9a, type: 3}
       propertyPath: m_Name
       value: Boba (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9144689901808252286, guid: 34a7ce366832f4b67b1e8fe34e85ff9a, type: 3}
+      propertyPath: maxInteractionDistance
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34a7ce366832f4b67b1e8fe34e85ff9a, type: 3}
@@ -36970,7 +36978,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 0}
   id: weed
-  key: 48
+  key: 51
   recover: 60
   madness: {fileID: 1922191965}
 --- !u!114 &1922191962
@@ -36987,7 +36995,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 0}
   id: boba
-  key: 56
+  key: 50
   cure: 60
   health: {fileID: 1922191966}
 --- !u!114 &1922191963
@@ -37004,7 +37012,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 0}
   id: hand sanitizer
-  key: 55
+  key: 49
   cure: 30
   health: {fileID: 1922191966}
 --- !u!114 &1922191964
@@ -37060,7 +37068,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 533acbb0ba5b484094b483c7c1e3217d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 500
   destroyOnDeath: 0
   onDamage:
     m_PersistentCalls:
